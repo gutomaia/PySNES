@@ -1,9 +1,10 @@
 from pysnes.cpu import CPU65816
 
 # .../PySNES/venv/$ py.test pysnes/test/
-class HeaderMock():
+class HeaderMock:
     def __init__(self):
         self.reset_int_addr = 0x8000
+
 
 class MemoryMock(object):
     def __init__(self, ROM):
@@ -65,7 +66,7 @@ def test_TRB_DP_8bit():
 def test_TRB_absolute_16bit():
     mem = MemoryMock([0x1C, 0x56, 0x34])
     cpu = CPU65816(mem)
-    cpu.P = 0b00000010 # 16 Bit mode
+    cpu.P = 0b00000010   # 16 Bit mode
     cpu.e = 0
     cpu.DBR = 0x12
     cpu.A = 0xFFFF
@@ -86,7 +87,7 @@ def test_TRB_absolute_16bit():
 def test_TRB_absolute_8bit():
     mem = MemoryMock([0x1C, 0x56, 0x34])
     cpu = CPU65816(mem)
-    cpu.P = 0b00100000 # 8 Bit mode
+    cpu.P = 0b00100000   # 8 Bit mode
     cpu.e = 0
     cpu.DBR = 0x12
     cpu.A = 0x66
@@ -145,7 +146,7 @@ def test_TSB_DP_8bit():
 def test_TSB_absolute_16bit():
     mem = MemoryMock([0x0C, 0x56, 0x34])
     cpu = CPU65816(mem)
-    cpu.P = 0b00000010 # 16 Bit mode
+    cpu.P = 0b00000010   # 16 Bit mode
     cpu.e = 0
     cpu.DBR = 0x12
     cpu.A = 0xFFFF
@@ -166,7 +167,7 @@ def test_TSB_absolute_16bit():
 def test_TSB_absolute_8bit():
     mem = MemoryMock([0x0C, 0xCD, 0xAB])
     cpu = CPU65816(mem)
-    cpu.P = 0b00100000 # 8 Bit mode
+    cpu.P = 0b00100000   # 8 Bit mode
     cpu.e = 0
     cpu.DBR = 0x12
     cpu.A = 0x43

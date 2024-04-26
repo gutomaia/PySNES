@@ -1,9 +1,10 @@
 from pysnes.cpu import CPU65816
 
 # .../PySNES/venv/$ py.test pysnes/test/
-class HeaderMock():
+class HeaderMock:
     def __init__(self):
         self.reset_int_addr = 0x8000
+
 
 class MemoryMock(object):
     def __init__(self, ROM):
@@ -84,6 +85,7 @@ def test_ADC_imm_clearN_8bit():
     assert cpu.A == 0x10
     assert cpu.P == 0b00100000  # no negative flag
     assert cpu.PC == 2 + mem.header.reset_int_addr
+
 
 def test_ADC_imm_setV_8bit():
     ROM = [0x69, 0x01]
@@ -390,7 +392,7 @@ def test_ADC_long():
     ROM = [0x6F, 0x56, 0x34, 0x12]
     mem = MemoryMock(ROM)
     cpu = CPU65816(mem)
-    cpu.P = 0b11000010 # 16 Bit mode
+    cpu.P = 0b11000010   # 16 Bit mode
     cpu.e = 0
     cpu.A = 0x0000
 
@@ -434,7 +436,7 @@ def test_ADC_DP_indirect():
     ROM = [0x72, 0x10]
     mem = MemoryMock(ROM)
     cpu = CPU65816(mem)
-    cpu.P = 0b00000000 # 16 Bit mode
+    cpu.P = 0b00000000   # 16 Bit mode
     cpu.e = 0
     cpu.DBR = 0x80
     cpu.DP = 0x0020
@@ -465,8 +467,8 @@ def test_ADC_stack_relative_indirect_indexed_Y():
     cpu.DBR = 0x12
     cpu.A = 0x7FFF
 
-    mem.write(0x00000A, 0xF0) # 0x1000A becomes 0x000A
-    mem.write(0x00000B, 0xFF) # 0x1000B becomes 0x000B
+    mem.write(0x00000A, 0xF0)   # 0x1000A becomes 0x000A
+    mem.write(0x00000B, 0xFF)   # 0x1000B becomes 0x000B
 
     mem.write(0x130040, 0x00)
     mem.write(0x130041, 0x80)
@@ -534,7 +536,7 @@ def test_ADC_abs_indexed_Y():
     cpu.Y = 0x0001
     cpu.A = 0x7FFF
 
-    mem.write(0x808001, 0x01) # no wrapping
+    mem.write(0x808001, 0x01)   # no wrapping
     mem.write(0x808002, 0x00)
 
     cpu.fetch_decode_execute()
@@ -555,7 +557,7 @@ def test_ADC_abs_indexed_X():
     cpu.X = 0x0001
     cpu.A = 0xFFFF
 
-    mem.write(0x808001, 0xFF) # no wrapping
+    mem.write(0x808001, 0xFF)   # no wrapping
     mem.write(0x808002, 0xFF)
 
     cpu.fetch_decode_execute()

@@ -4,15 +4,17 @@ from pysnes.disassembler import Disassembler
 from pysnes.cpu import CPU65816
 import sys
 
+
 class MemoryMock(object):
     def __init__(self):
-        self.ram = [0x00] * 16777216 # 2 ** 24
+        self.ram = [0x00] * 16777216   # 2 ** 24
 
     def read(self, address):
         return self.ram[address]
 
     def write(self, address, value):
         self.ram[address] = value
+
 
 def main(argv):
     ba = open_as_byte_array(argv[1])
@@ -26,9 +28,12 @@ def main(argv):
         c.fetch_decode_execute(ba)
     return 0
 
+
 def target(*args):
-    return main, None # returns the entry point
+    return main, None   # returns the entry point
+
 
 if __name__ == '__main__':
     import sys
+
     main(sys.argv)

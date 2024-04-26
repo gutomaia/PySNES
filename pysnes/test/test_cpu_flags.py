@@ -1,9 +1,10 @@
 from pysnes.cpu import CPU65816
 
 # .../PySNES/venv/$ py.test pysnes/test/
-class HeaderMock():
+class HeaderMock:
     def __init__(self):
         self.reset_int_addr = 0x8000
+
 
 class MemoryMock(object):
     def __init__(self, ROM):
@@ -112,8 +113,8 @@ def test_SEP_REP():
     cpu = CPU65816(mem)
     cpu.e = 0
 
-    cpu.fetch_decode_execute() # SEP 00000 0010
-    cpu.fetch_decode_execute() # REP 0000 0010
+    cpu.fetch_decode_execute()   # SEP 00000 0010
+    cpu.fetch_decode_execute()   # REP 0000 0010
 
     assert cpu.P == 0b00000000
     assert cpu.PC == 4 + mem.header.reset_int_addr

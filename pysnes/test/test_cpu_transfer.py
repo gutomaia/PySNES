@@ -1,9 +1,10 @@
 from pysnes.cpu import CPU65816
 
 # .../PySNES/venv/$ py.test pysnes/test/
-class HeaderMock():
+class HeaderMock:
     def __init__(self):
         self.reset_int_addr = 0x8000
+
 
 class MemoryMock(object):
     def __init__(self, ROM):

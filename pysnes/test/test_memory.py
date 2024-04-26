@@ -2,16 +2,18 @@ from pysnes.cartrige import CartrigeType
 from pysnes.memory import MemoryMapper
 
 # .../PySNES/venv/$ py.test pysnes/test/
-RAM  = [0] * (2 ** 17 - 1)  # 128 KB
-ROM  = [0] * (2 ** 22 - 1)  # 4 MB
+RAM = [0] * (2**17 - 1)  # 128 KB
+ROM = [0] * (2**22 - 1)  # 4 MB
 SRAM = [0] * 0x7FFF         # 32 KB
 
-class HeaderMock():
+
+class HeaderMock:
     def __init__(self):
         self.reset_int_addr = 0x8000
 
     def getCartridgeType(self):
         return CartrigeType.LOROM
+
 
 def test_LoROM_ROM():
     header = HeaderMock()

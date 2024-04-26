@@ -1,9 +1,10 @@
 from pysnes.cpu import CPU65816
 
 # .../PySNES/venv/$ py.test pysnes/test/
-class HeaderMock():
+class HeaderMock:
     def __init__(self):
         self.reset_int_addr = 0x8000
+
 
 class MemoryMock(object):
     def __init__(self, ROM):
@@ -62,7 +63,7 @@ def test_BIT_DP_8bit():
 def test_BIT_absolute_16bit():
     mem = MemoryMock([0x2C, 0x56, 0x34])
     cpu = CPU65816(mem)
-    cpu.P = 0b11000010 # 16 Bit mode
+    cpu.P = 0b11000010   # 16 Bit mode
     cpu.e = 0
     cpu.DBR = 0x12
     cpu.A = 0xFFFF
@@ -81,7 +82,7 @@ def test_BIT_absolute_16bit():
 def test_BIT_absolute_8bit():
     mem = MemoryMock([0x2C, 0xCD, 0xAB])
     cpu = CPU65816(mem)
-    cpu.P = 0b11100010 # 8 Bit mode
+    cpu.P = 0b11100010   # 8 Bit mode
     cpu.e = 0
     cpu.DBR = 0x12
     cpu.A = 0x43
@@ -99,7 +100,7 @@ def test_BIT_absolute_8bit():
 def test_BIT_DP_indexed_X_16bit():
     mem = MemoryMock([0x34, 0x30])
     cpu = CPU65816(mem)
-    cpu.P = 0b11000010 # 16 Bit mode
+    cpu.P = 0b11000010   # 16 Bit mode
     cpu.e = 0
     cpu.DP = 0x0020
     cpu.X = 0x0004
@@ -119,7 +120,7 @@ def test_BIT_DP_indexed_X_16bit():
 def test_BIT_DP_indexed_X_8bit():
     mem = MemoryMock([0x34, 0x30])
     cpu = CPU65816(mem)
-    cpu.P = 0b11100010 # 8 Bit mode
+    cpu.P = 0b11100010   # 8 Bit mode
     cpu.e = 0
     cpu.DP = 0x0020
     cpu.X = 0x0004
@@ -138,13 +139,13 @@ def test_BIT_DP_indexed_X_8bit():
 def test_BIT_abs_indexed_X_16bit():
     mem = MemoryMock([0x3C, 0x00, 0x80])
     cpu = CPU65816(mem)
-    cpu.P = 0b00000000 # 16 Bit mode
+    cpu.P = 0b00000000   # 16 Bit mode
     cpu.e = 0
     cpu.DBR = 0x80
     cpu.X = 0x0001
     cpu.A = 0x0F0F
 
-    mem.write(0x808001, 0xFF) # no wrapping
+    mem.write(0x808001, 0xFF)   # no wrapping
     mem.write(0x808002, 0xF0)
 
     cpu.fetch_decode_execute()
@@ -158,13 +159,13 @@ def test_BIT_abs_indexed_X_16bit():
 def test_BIT_abs_indexed_X_8bit():
     mem = MemoryMock([0x3C, 0x00, 0x80])
     cpu = CPU65816(mem)
-    cpu.P = 0b11100010 # 8 Bit mode
+    cpu.P = 0b11100010   # 8 Bit mode
     cpu.e = 0
     cpu.DBR = 0x80
     cpu.X = 0x0001
     cpu.A = 0x0F
 
-    mem.write(0x808001, 0xFF) # no wrapping
+    mem.write(0x808001, 0xFF)   # no wrapping
 
     cpu.fetch_decode_execute()
 

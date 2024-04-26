@@ -1,8 +1,17 @@
 from pysnes.opcodes import opcode_map, Mode
 
+
 class Disassembler(object):
-    def disassemble_single_opcode(self, memory, index, add_new_line=False,
-                                  add_descr=False, add_addr=False, M=False, X=False):
+    def disassemble_single_opcode(
+        self,
+        memory,
+        index,
+        add_new_line=False,
+        add_descr=False,
+        add_addr=False,
+        M=False,
+        X=False,
+    ):
         opcode = memory.read(index)
         opcode_info = opcode_map[opcode]
         mnemonic = opcode_info[0]
@@ -11,10 +20,10 @@ class Disassembler(object):
         length = opcode_info[3]
         cycles = opcode_info[4]
         descr = opcode_info[5]
-        result = ""
+        result = ''
         if add_addr:
-            result += hex(index)+":"
-        result += hex(opcode)+":"+mnemonic+" "
+            result += hex(index) + ':'
+        result += hex(opcode) + ':' + mnemonic + ' '
         index = index + 1
         if length == 2:
             immediate8bit = memory.read(index)
@@ -55,7 +64,17 @@ class Disassembler(object):
             result += hex(addr)
         return result
 
-    def disassemble(self, memory, start, end, add_new_line=False, add_descr=False, add_addr=False, M=False, X=False):
+    def disassemble(
+        self,
+        memory,
+        start,
+        end,
+        add_new_line=False,
+        add_descr=False,
+        add_addr=False,
+        M=False,
+        X=False,
+    ):
         index = start
         symbolic = []
         while index < end:
@@ -67,7 +86,7 @@ class Disassembler(object):
             cycles = opcode_info[4]
             descr = opcode_info[5]
             if add_addr:
-                symbolic.append(hex(index)+":\t"+mnemonic)
+                symbolic.append(hex(index) + ':\t' + mnemonic)
             else:
                 symbolic.append(mnemonic)
             index = index + 1
@@ -117,20 +136,22 @@ class Disassembler(object):
                 symbolic.append(hex(addr))
             if add_descr:
                 if length == 2:
-                    symbolic.append("\t"*(2) + descr)
+                    symbolic.append('\t' * (2) + descr)
                 elif length == 3:
-                    symbolic.append("\t"*(2) + descr)
+                    symbolic.append('\t' * (2) + descr)
                 else:
-                    symbolic.append("\t"*(3) + descr)
+                    symbolic.append('\t' * (3) + descr)
             if add_new_line:
-                symbolic.append("\n")
+                symbolic.append('\n')
         return symbolic
 
     def print_assembler(self, memory, start, end):
-        symbolic_code = self.disassemble(memory, start, end, True, True, True, True, False) # FIXME
+        symbolic_code = self.disassemble(
+            memory, start, end, True, True, True, True, False
+        )   # FIXME
         i = 0
         print
-        print("Assembly:")
+        print('Assembly:')
         print
         while i < len(symbolic_code):
             string = symbol = symbolic_code[i]
@@ -139,8 +160,6 @@ class Disassembler(object):
                 symbol = symbolic_code[i]
                 if symbol == '\n':
                     break
-                string += " " + symbol
+                string += ' ' + symbol
             i = i + 1
             print(string)
-
-

@@ -1,9 +1,10 @@
 from pysnes.cpu import CPU65816
 
 # .../PySNES/venv/$ py.test pysnes/test/
-class HeaderMock():
+class HeaderMock:
     def __init__(self):
         self.reset_int_addr = 0x8000
+
 
 class MemoryMock(object):
     def __init__(self, ROM):
@@ -95,7 +96,7 @@ def test_EOR_8Bit_constant_zero():
 
     assert cpu.cycles == 2
     assert cpu.A == 0x00
-    assert cpu.P == 0b00100010 # zero flag
+    assert cpu.P == 0b00100010   # zero flag
     assert cpu.PC == 2 + mem.header.reset_int_addr
 
 
@@ -150,7 +151,7 @@ def test_EOR_8Bit_constant_noflag():
 def test_EOR_DP_indexed_indirect_X():
     mem = MemoryMock([0x41, 0x02])
     cpu = CPU65816(mem)
-    cpu.P = 0b00000000 # 16 Bit mode
+    cpu.P = 0b00000000   # 16 Bit mode
     cpu.e = 0
     cpu.DBR = 0x80
     cpu.DP = 0x0020
@@ -175,7 +176,7 @@ def test_EOR_DP_indexed_indirect_X():
 def test_EOR_DP_indexed_indirect_X2():
     mem = MemoryMock([0x41, 0xFE])
     cpu = CPU65816(mem)
-    cpu.P = 0b00000000 # 16 Bit mode
+    cpu.P = 0b00000000   # 16 Bit mode
     cpu.e = 0
     cpu.DBR = 0x12
     cpu.DP = 0xFF00
@@ -199,7 +200,7 @@ def test_EOR_DP_indexed_indirect_X2():
 def test_EOR_stack_relative():
     mem = MemoryMock([0x43, 0x01])
     cpu = CPU65816(mem)
-    cpu.P = 0b00000000 # 16 Bit mode
+    cpu.P = 0b00000000   # 16 Bit mode
     cpu.e = 0
     cpu.SP = 0x1FF0
     cpu.A = 0xCDAB
@@ -218,7 +219,7 @@ def test_EOR_stack_relative():
 def test_EOR_stack_relative2():
     mem = MemoryMock([0x43, 0xFA])
     cpu = CPU65816(mem)
-    cpu.P = 0b00000000 # 16 Bit mode
+    cpu.P = 0b00000000   # 16 Bit mode
     cpu.e = 0
     cpu.SP = 0xFF10
     cpu.A = 0x0AAA
@@ -277,7 +278,7 @@ def test_EOR_DP2():
 def test_EOR_DP_indirect_long():
     mem = MemoryMock([0x47, 0x10])
     cpu = CPU65816(mem)
-    cpu.P = 0b00000000 # 16 Bit mode
+    cpu.P = 0b00000000   # 16 Bit mode
     cpu.e = 0
     cpu.DP = 0x0020
     cpu.A = 0x0123
@@ -300,7 +301,7 @@ def test_EOR_DP_indirect_long():
 def test_EOR_DP_indirect_long2():
     mem = MemoryMock([0x47, 0xFE])
     cpu = CPU65816(mem)
-    cpu.P = 0b00000000 # 16 Bit mode
+    cpu.P = 0b00000000   # 16 Bit mode
     cpu.e = 0
     cpu.DP = 0xFF00
     cpu.A = 0xFECD
@@ -323,7 +324,7 @@ def test_EOR_DP_indirect_long2():
 def test_EOR_absolute():
     mem = MemoryMock([0x4D, 0x56, 0x34])
     cpu = CPU65816(mem)
-    cpu.P = 0b00000000 # 16 Bit mode
+    cpu.P = 0b00000000   # 16 Bit mode
     cpu.e = 0
     cpu.DBR = 0x12
     cpu.A = 0xFFFF
@@ -342,7 +343,7 @@ def test_EOR_absolute():
 def test_EOR_absolute2():
     mem = MemoryMock([0x4D, 0xFF, 0xFF])
     cpu = CPU65816(mem)
-    cpu.P = 0b00000000 # 16 Bit mode
+    cpu.P = 0b00000000   # 16 Bit mode
     cpu.e = 0
     cpu.DBR = 0x12
     cpu.A = 0x1234
@@ -361,7 +362,7 @@ def test_EOR_absolute2():
 def test_EOR_long():
     mem = MemoryMock([0x4F, 0x56, 0x34, 0x12])
     cpu = CPU65816(mem)
-    cpu.P = 0b00000000 # 16 Bit mode
+    cpu.P = 0b00000000   # 16 Bit mode
     cpu.e = 0
     cpu.A = 0xF000
 
@@ -379,7 +380,7 @@ def test_EOR_long():
 def test_EOR_long2():
     mem = MemoryMock([0x4F, 0xFF, 0xFF, 0x12])
     cpu = CPU65816(mem)
-    cpu.P = 0b00000000 # 16 Bit mode
+    cpu.P = 0b00000000   # 16 Bit mode
     cpu.e = 0
     cpu.A = 0xFABC
 
@@ -398,7 +399,7 @@ def test_EOR_long2():
 def test_EOR_DP_indirect_indexed_Y():
     mem = MemoryMock([0x51, 0x10])
     cpu = CPU65816(mem)
-    cpu.P = 0b00000000 # 16 Bit mode
+    cpu.P = 0b00000000   # 16 Bit mode
     cpu.e = 0
     cpu.DBR = 0x80
     cpu.DP = 0x0020
@@ -422,7 +423,7 @@ def test_EOR_DP_indirect_indexed_Y():
 def test_EOR_DP_indirect_indexed_Y2():
     mem = MemoryMock([0x51, 0xFF])
     cpu = CPU65816(mem)
-    cpu.P = 0b00000000 # 16 Bit mode
+    cpu.P = 0b00000000   # 16 Bit mode
     cpu.e = 0
     cpu.DBR = 0x12
     cpu.DP = 0xFF00
@@ -446,7 +447,7 @@ def test_EOR_DP_indirect_indexed_Y2():
 def test_EOR_DP_indirect():
     mem = MemoryMock([0x52, 0x10])
     cpu = CPU65816(mem)
-    cpu.P = 0b00000000 # 16 Bit mode
+    cpu.P = 0b00000000   # 16 Bit mode
     cpu.e = 0
     cpu.DBR = 0x80
     cpu.DP = 0x0020
@@ -469,7 +470,7 @@ def test_EOR_DP_indirect():
 def test_EOR_DP_indirect2():
     mem = MemoryMock([0x52, 0xFF])
     cpu = CPU65816(mem)
-    cpu.P = 0b00000000 # 16 Bit mode
+    cpu.P = 0b00000000   # 16 Bit mode
     cpu.e = 0
     cpu.DBR = 0x12
     cpu.DP = 0xFF00
@@ -492,15 +493,15 @@ def test_EOR_DP_indirect2():
 def test_EOR_stack_relative_indirect_indexed_Y():
     mem = MemoryMock([0x53, 0xFA])
     cpu = CPU65816(mem)
-    cpu.P = 0b00000000 # 16 Bit mode
+    cpu.P = 0b00000000   # 16 Bit mode
     cpu.e = 0
     cpu.SP = 0xFF10
     cpu.Y = 0x50
     cpu.DBR = 0x12
     cpu.A = 0x1234
 
-    mem.write(0x00000A, 0xF0) # 0x1000A becomes 0x000A
-    mem.write(0x00000B, 0xFF) # 0x1000B becomes 0x000B
+    mem.write(0x00000A, 0xF0)   # 0x1000A becomes 0x000A
+    mem.write(0x00000B, 0xFF)   # 0x1000B becomes 0x000B
 
     mem.write(0x130040, 0x21)
     mem.write(0x130041, 0x43)
@@ -515,7 +516,7 @@ def test_EOR_stack_relative_indirect_indexed_Y():
 def test_EOR_DP_indexed_X():
     mem = MemoryMock([0x55, 0x30])
     cpu = CPU65816(mem)
-    cpu.P = 0b00000000 # 16 Bit mode
+    cpu.P = 0b00000000   # 16 Bit mode
     cpu.e = 0
     cpu.DP = 0x0020
     cpu.X = 0x0004
@@ -535,7 +536,7 @@ def test_EOR_DP_indexed_X():
 def test_EOR_DP_indexed_X2():
     mem = MemoryMock([0x55, 0xFE])
     cpu = CPU65816(mem)
-    cpu.P = 0b00000000 # 16 Bit mode
+    cpu.P = 0b00000000   # 16 Bit mode
     cpu.e = 0
     cpu.DP = 0xFF00
     cpu.X = 0x000A
@@ -555,7 +556,7 @@ def test_EOR_DP_indexed_X2():
 def test_EOR_DP_indirect_long_indexed_Y():
     mem = MemoryMock([0x57, 0x10])
     cpu = CPU65816(mem)
-    cpu.P = 0b00000000 # 16 Bit mode
+    cpu.P = 0b00000000   # 16 Bit mode
     cpu.e = 0
     cpu.DP = 0x0020
     cpu.Y = 0x0001
@@ -579,7 +580,7 @@ def test_EOR_DP_indirect_long_indexed_Y():
 def test_EOR_DP_indirect_long_indexed_Y2():
     mem = MemoryMock([0x57, 0xFE])
     cpu = CPU65816(mem)
-    cpu.P = 0b00000000 # 16 Bit mode
+    cpu.P = 0b00000000   # 16 Bit mode
     cpu.e = 0
     cpu.DP = 0xFF00
     cpu.Y = 0x000A
@@ -603,13 +604,13 @@ def test_EOR_DP_indirect_long_indexed_Y2():
 def test_EOR_abs_indexed_Y():
     mem = MemoryMock([0x59, 0x00, 0x80])
     cpu = CPU65816(mem)
-    cpu.P = 0b00000000 # 16 Bit mode
+    cpu.P = 0b00000000   # 16 Bit mode
     cpu.e = 0
     cpu.DBR = 0x80
     cpu.Y = 0x0001
     cpu.A = 0x0F0F
 
-    mem.write(0x808001, 0xFF) # no wrapping
+    mem.write(0x808001, 0xFF)   # no wrapping
     mem.write(0x808002, 0x00)
 
     cpu.fetch_decode_execute()
@@ -623,13 +624,13 @@ def test_EOR_abs_indexed_Y():
 def test_EOR_abs_indexed_Y2():
     mem = MemoryMock([0x59, 0xFE, 0xFF])
     cpu = CPU65816(mem)
-    cpu.P = 0b00000000 # 16 Bit mode
+    cpu.P = 0b00000000   # 16 Bit mode
     cpu.e = 0
     cpu.DBR = 0x12
     cpu.Y = 0x000A
     cpu.A = 0x0F0F
 
-    mem.write(0x130008, 0xFF) # no wrapping
+    mem.write(0x130008, 0xFF)   # no wrapping
     mem.write(0x130009, 0xFF)
 
     cpu.fetch_decode_execute()
@@ -643,13 +644,13 @@ def test_EOR_abs_indexed_Y2():
 def test_EOR_abs_indexed_X():
     mem = MemoryMock([0x5D, 0x00, 0x80])
     cpu = CPU65816(mem)
-    cpu.P = 0b00000000 # 16 Bit mode
+    cpu.P = 0b00000000   # 16 Bit mode
     cpu.e = 0
     cpu.DBR = 0x80
     cpu.X = 0x0001
     cpu.A = 0x0F0F
 
-    mem.write(0x808001, 0xFF) # no wrapping
+    mem.write(0x808001, 0xFF)   # no wrapping
     mem.write(0x808002, 0x00)
 
     cpu.fetch_decode_execute()
@@ -663,13 +664,13 @@ def test_EOR_abs_indexed_X():
 def test_EOR_abs_indexed_X2():
     mem = MemoryMock([0x5D, 0xFE, 0xFF])
     cpu = CPU65816(mem)
-    cpu.P = 0b00000000 # 16 Bit mode
+    cpu.P = 0b00000000   # 16 Bit mode
     cpu.e = 0
     cpu.DBR = 0x12
     cpu.X = 0x000A
     cpu.A = 0x0F0F
 
-    mem.write(0x130008, 0xFF) # no wrapping
+    mem.write(0x130008, 0xFF)   # no wrapping
     mem.write(0x130009, 0xFF)
 
     cpu.fetch_decode_execute()
@@ -682,7 +683,7 @@ def test_EOR_abs_indexed_X2():
 def test_EOR_long_indexed_X():
     mem = MemoryMock([0x5F, 0x00, 0x80, 0x80])
     cpu = CPU65816(mem)
-    cpu.P = 0b00000000 # 16 Bit mode
+    cpu.P = 0b00000000   # 16 Bit mode
     cpu.e = 0
     cpu.X = 0x0001
     cpu.A = 0xFFFF
@@ -700,7 +701,7 @@ def test_EOR_long_indexed_X():
 def test_EOR_long_indexed_X2():
     mem = MemoryMock([0x5F, 0xFE, 0xFF, 0x12])
     cpu = CPU65816(mem)
-    cpu.P = 0b00000000 # 16 Bit mode
+    cpu.P = 0b00000000   # 16 Bit mode
     cpu.e = 0
     cpu.X = 0x000A
     cpu.A = 0xCDAB

@@ -1,9 +1,10 @@
 from pysnes.cpu import CPU65816
 
 # .../PySNES/venv/$ py.test pysnes/test/
-class HeaderMock():
+class HeaderMock:
     def __init__(self):
         self.reset_int_addr = 0x8000
+
 
 class MemoryMock(object):
     def __init__(self, ROM):
@@ -28,10 +29,10 @@ def test_PEA():
     cpu.SP = 0x01FF
     cpu.P = 0b00000000  # M and X Flag have no effect on PEA
 
-    cpu.fetch_decode_execute() # PEA #$1234
+    cpu.fetch_decode_execute()   # PEA #$1234
 
-    assert mem.read(0x0001FF) == 0x12 # high
-    assert mem.read(0x0001FE) == 0x34 # low
+    assert mem.read(0x0001FF) == 0x12   # high
+    assert mem.read(0x0001FE) == 0x34   # low
     assert cpu.SP == 0x01FD
     assert cpu.cycles == 5
     assert cpu.PC == 3 + mem.header.reset_int_addr
@@ -42,16 +43,16 @@ def test_PEI():
     cpu = CPU65816(mem)
     cpu.SP = 0x01FF
     cpu.DP = 0x1200
-    mem.write(0x001234, 0x78) # low: D + 0x34
+    mem.write(0x001234, 0x78)   # low: D + 0x34
     mem.write(0x001235, 0x56)
     cpu.P = 0b00000000  # M and X Flag have no effect on PEI
 
-    cpu.fetch_decode_execute() # PEI ($34)
+    cpu.fetch_decode_execute()   # PEI ($34)
 
-    assert mem.read(0x0001FF) == 0x56 # high
-    assert mem.read(0x0001FE) == 0x78 # low
+    assert mem.read(0x0001FF) == 0x56   # high
+    assert mem.read(0x0001FE) == 0x78   # low
     assert cpu.SP == 0x01FD
-    assert cpu.cycles == 6 # DL=0 => w=0
+    assert cpu.cycles == 6   # DL=0 => w=0
     assert cpu.PC == 2 + mem.header.reset_int_addr
 
 
@@ -59,40 +60,40 @@ def test_PEI2():
     mem = MemoryMock([0xD4, 0x33])
     cpu = CPU65816(mem)
     cpu.SP = 0x01FF
-    cpu.DP = 0x1201 # DH=12 DL=01
-    mem.write(0x001234, 0x78) # low: D + 0x33
+    cpu.DP = 0x1201   # DH=12 DL=01
+    mem.write(0x001234, 0x78)   # low: D + 0x33
     mem.write(0x001235, 0x56)
     cpu.P = 0b00000000  # M and X Flag have no effect on PEI
 
-    cpu.fetch_decode_execute() # PEI ($33)
+    cpu.fetch_decode_execute()   # PEI ($33)
 
-    assert mem.read(0x0001FF) == 0x56 # high
-    assert mem.read(0x0001FE) == 0x78 # low
+    assert mem.read(0x0001FF) == 0x56   # high
+    assert mem.read(0x0001FE) == 0x78   # low
     assert cpu.SP == 0x01FD
-    assert cpu.cycles == 7 # DL!=0 => w=1
+    assert cpu.cycles == 7   # DL!=0 => w=1
     assert cpu.PC == 2 + mem.header.reset_int_addr
 
 
 def test_PER():
     nops = [0xEA] * 0x20
-    mem = MemoryMock(nops+[0x62, 0x34, 0x12])
+    mem = MemoryMock(nops + [0x62, 0x34, 0x12])
     cpu = CPU65816(mem)
     cpu.SP = 0x01FF
     cpu.PC += 0x20
     cpu.P = 0b00000000  # M and X Flag have no effect on PER
 
-    cpu.fetch_decode_execute() # PER #$1234
+    cpu.fetch_decode_execute()   # PER #$1234
 
-    assert mem.read(0x0001FF) == 0x92 # high
-    assert mem.read(0x0001FE) == 0x57 # low (0x1234+PC+0x3 = 0x9257)
+    assert mem.read(0x0001FF) == 0x92   # high
+    assert mem.read(0x0001FE) == 0x57   # low (0x1234+PC+0x3 = 0x9257)
     assert cpu.SP == 0x01FD
     assert cpu.cycles == 6
     assert cpu.PC == 0x23 + mem.header.reset_int_addr
 
 
 def test_PER2():
-    nops = [0xEA]*0x12
-    mem = MemoryMock(nops+[0x62, 0x12, 0x00])
+    nops = [0xEA] * 0x12
+    mem = MemoryMock(nops + [0x62, 0x12, 0x00])
     cpu = CPU65816(mem)
     cpu.SP = 0x01FF
     cpu.PC += 0x12
@@ -109,9 +110,9 @@ def test_PER2():
 
 def test_PHK():
     nops = [0xEA] * ((0x12 << 16))
-    mem = MemoryMock(nops+[0x4B])
+    mem = MemoryMock(nops + [0x4B])
     cpu = CPU65816(mem)
-    cpu.PBR = 0x12 # K
+    cpu.PBR = 0x12   # K
     cpu.SP = 0x01FF
     cpu.P = 0b00000000
 
@@ -128,7 +129,7 @@ def test_PHK():
 def test_PHB():
     mem = MemoryMock([0x8B])
     cpu = CPU65816(mem)
-    cpu.DBR = 0x12 # B
+    cpu.DBR = 0x12   # B
     cpu.SP = 0x01FF
     cpu.P = 0b00000000
 
@@ -145,7 +146,7 @@ def test_PHB():
 def test_PHP():
     mem = MemoryMock([0x08])
     cpu = CPU65816(mem)
-    cpu.P = 0b10101010 # P
+    cpu.P = 0b10101010   # P
     cpu.SP = 0x01FF
 
     cpu.fetch_decode_execute()
@@ -160,7 +161,7 @@ def test_PHP():
 def test_PHD():
     mem = MemoryMock([0x0B])
     cpu = CPU65816(mem)
-    cpu.DP = 0xAFFE # D
+    cpu.DP = 0xAFFE   # D
     cpu.P = 0b00000000
     cpu.SP = 0x01FF
 
@@ -214,12 +215,14 @@ def test_PLA_8_bit():
     cpu.SP = 0x01FE
     cpu.A = 0xFFFF
     mem.write(0x0001FF, 0x42)
-    cpu.P = 0b00100000 # set m flag
+    cpu.P = 0b00100000   # set m flag
     cpu.stack = [0x42]
 
     cpu.fetch_decode_execute()
 
-    assert cpu.A == 0xFF42 # in 8 bit mode the high byte of the A register persists
+    assert (
+        cpu.A == 0xFF42
+    )   # in 8 bit mode the high byte of the A register persists
     assert cpu.SP == 0x01FF
     assert cpu.cycles == 4
     assert cpu.P == 0b00100000
@@ -235,7 +238,7 @@ def test_PLA_16_bit():
     mem.write(0x0001FF, 0xCD)
     mem.write(0x0001FE, 0xAB)
     cpu.stack = [0xCD, 0xAB]
-    
+
     cpu.fetch_decode_execute()
 
     assert cpu.A == 0xCDAB
@@ -283,18 +286,20 @@ def test_PLX_8_bit():
     cpu = CPU65816(mem)
     cpu.SP = 0x01FE
     cpu.X = 0xFFFF
-    cpu.P = 0b00010000 # set x flag
+    cpu.P = 0b00010000   # set x flag
     mem.write(0x0001FF, 0xB7)
     cpu.stack = [0xB7]
 
     cpu.fetch_decode_execute()
 
     assert cpu.SP == 0x01FF
-    assert cpu.P == 0b10010000 # negative flag set
+    assert cpu.P == 0b10010000   # negative flag set
     assert cpu.cycles == 4
-    assert cpu.X == 0x00B7 # in 8 bit mode the high byte of the X/Y registers is forced to 0
+    assert (
+        cpu.X == 0x00B7
+    )   # in 8 bit mode the high byte of the X/Y registers is forced to 0
     assert cpu.PC == 1 + mem.header.reset_int_addr
-    
+
 
 def test_PLX_16_bit():
     mem = MemoryMock([0xFA])
@@ -309,7 +314,7 @@ def test_PLX_16_bit():
     cpu.fetch_decode_execute()
 
     assert cpu.SP == 0x01FF
-    assert cpu.P == 0b10000000 # negative flag set
+    assert cpu.P == 0b10000000   # negative flag set
     assert cpu.cycles == 5
     assert cpu.X == 0xB00B
     assert cpu.PC == 1 + mem.header.reset_int_addr
@@ -320,14 +325,14 @@ def test_PLY_8_bit():
     cpu = CPU65816(mem)
     cpu.SP = 0x01FE
     cpu.Y = 0xFFFF
-    cpu.P = 0b00010000 # set x flag
+    cpu.P = 0b00010000   # set x flag
     mem.write(0x0001FF, 0x00)
     cpu.stack = [0x00]
 
     cpu.fetch_decode_execute()
 
     assert cpu.SP == 0x01FF
-    assert cpu.P == 0b00010010 # zero flag set
+    assert cpu.P == 0b00010010   # zero flag set
     assert cpu.cycles == 4
     assert cpu.Y == 0x0000
     assert cpu.PC == 1 + mem.header.reset_int_addr
@@ -357,7 +362,7 @@ def test_PHY_8_bit():
     cpu = CPU65816(mem)
     cpu.Y = 0x9001
     cpu.SP = 0x01FF
-    cpu.P = 0b00010000 # set x flag
+    cpu.P = 0b00010000   # set x flag
 
     cpu.fetch_decode_execute()
 
@@ -391,7 +396,7 @@ def test_PLP_16_bit():
     cpu.SP = 0x01FE
     cpu.e = 0
     mem.write(0x01FF, 0b10101010)
-    cpu.stack = [0xb10101010]
+    cpu.stack = [0xB10101010]
     cpu.P = 0b00000000
 
     cpu.fetch_decode_execute()
@@ -408,7 +413,7 @@ def test_PLP_8_bit():
     cpu = CPU65816(mem)
     cpu.SP = 0x01FE
     mem.write(0x01FF, 0b11001111)
-    cpu.stack = [0xb11001111]
+    cpu.stack = [0xB11001111]
     cpu.P = 0b00000000
     cpu.e = 1
 
@@ -434,7 +439,7 @@ def test_PLD():
     cpu.fetch_decode_execute()
 
     assert cpu.DP == 0xCDAB
-    assert cpu.P == 0b10000000 # n flag set and z flag not set
+    assert cpu.P == 0b10000000   # n flag set and z flag not set
     assert cpu.SP == 0x01FF
     assert cpu.cycles == 5
     assert cpu.PC == 1 + mem.header.reset_int_addr

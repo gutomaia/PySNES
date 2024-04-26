@@ -1,8 +1,14 @@
 from rsdl import RSDL, RSDL_helper  # , RMix
 from rpython.rtyper.lltypesystem import lltype, rffi
 
+
 class PictureProcessingUnit(object):
-    COLOR_MAP = [(0xff, 0xff, 0xff), (0xCC, 0xCC, 0xCC), (0x66, 0x66, 0x66), (0, 0, 0)]
+    COLOR_MAP = [
+        (0xFF, 0xFF, 0xFF),
+        (0xCC, 0xCC, 0xCC),
+        (0x66, 0x66, 0x66),
+        (0, 0, 0),
+    ]
 
     def init(self):
         self.scale = 4
@@ -10,13 +16,15 @@ class PictureProcessingUnit(object):
         self.height = 240
         self.init_sdl()
         self.create_screen()
-        #self.update_display()
+        # self.update_display()
         get_ticks = RSDL.GetTicks
+
         def delay(secs):
             return RSDL.Delay(int(secs * 1000))
+
         self.poll_event()
         self.update_display()
-        #while True:
+        # while True:
         #     pass
 
     def init_sdl(self):
@@ -26,7 +34,9 @@ class PictureProcessingUnit(object):
     def create_screen(self):
         # 32 bits per pixel
         # 0 no flags
-        self.screen = RSDL.SetVideoMode(self.width*self.scale, self.height*self.scale, 32, 0)
+        self.screen = RSDL.SetVideoMode(
+            self.width * self.scale, self.height * self.scale, 32, 0
+        )
         fmt = self.screen.c_format
         self.colors = []
         for color in self.COLOR_MAP:
@@ -36,7 +46,7 @@ class PictureProcessingUnit(object):
 
     def update_display(self):
         RSDL.LockSurface(self.screen)
-        self.draw_pixel(0,0,0)
+        self.draw_pixel(0, 0, 0)
         RSDL.UnlockSurface(self.screen)
         RSDL.Flip(self.screen)
 
@@ -45,8 +55,8 @@ class PictureProcessingUnit(object):
         start_x = x * self.scale
         start_y = y * self.scale
         dstrect = self.blit_rect
-        rffi.setintfield(dstrect, 'c_x',  start_x)
-        rffi.setintfield(dstrect, 'c_y',  start_y)
+        rffi.setintfield(dstrect, 'c_x', start_x)
+        rffi.setintfield(dstrect, 'c_y', start_y)
         RSDL.FillRect(self.screen, dstrect, color)
 
     def handle_execution_error(self, error):
