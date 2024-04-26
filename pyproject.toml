@@ -2,7 +2,7 @@
 name = "pysnes"
 version = "0.0.0"
 description = "pysnes"
-authors = ["John Witulski"]
+authors = ["John Witulski <John.Witulski@uni-duesseldorf.de>"]
 
 [tool.poetry.dependencies]
 python = "^3.11"
