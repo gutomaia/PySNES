@@ -1,4 +1,4 @@
-from helper import get_two_bytes_little_endian, pow
+from pysnes.helper import get_two_bytes_little_endian, pow
 
 LO_ROM_HEADER = "007FC0"
 HI_ROM_HEADER = "00FFC0"

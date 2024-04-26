@@ -1,4 +1,4 @@
-from opcodes import opcode_map, Mode
+from pysnes.opcodes import opcode_map, Mode
 
 class Disassembler(object):
     def disassemble_single_opcode(self, memory, index, add_new_line=False,

@@ -1,7 +1,7 @@
-from cartrige import ROMHeader
-from helper import open_as_byte_array
-from disassembler import Disassembler
-from cpu import CPU65816
+from pysnes.cartrige import ROMHeader
+from pysnes.helper import open_as_byte_array
+from pysnes.disassembler import Disassembler
+from pysnes.cpu import CPU65816
 import sys
 
 class MemoryMock(object):

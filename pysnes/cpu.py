@@ -1,4 +1,4 @@
-import address_computation_helper as compute_addr
+from pysnes import address_computation_helper as compute_addr
 
 class CPU65816(object):
     def __init__(self, memory):

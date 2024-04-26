@@ -1,9 +1,9 @@
-from cartrige import ROMHeader
-from helper import open_as_byte_array
-from disassembler import Disassembler
-from cpu import CPU65816
-from graphics import PictureProcessingUnit
-from memory import MemoryMapper
+from pysnes.cartrige import ROMHeader
+from pysnes.helper import open_as_byte_array
+from pysnes.disassembler import Disassembler
+from pysnes.cpu import CPU65816
+from pysnes.graphics import PictureProcessingUnit
+from pysnes.memory import MemoryMapper
 import sys
 
 if len(sys.argv) <= 1:

@@ -1,7 +1,7 @@
-from cartrige import CartrigeType
-from dma import DMAController, HDMAController
-from internal_cpu import InternalCPURegisters
-from ppu import PPU
+from pysnes.cartrige import CartrigeType
+from pysnes.dma import DMAController, HDMAController
+from pysnes.internal_cpu import InternalCPURegisters
+from pysnes.ppu import PPU
 
 
 # When the CPU puts a signal on its address bus some bytes can be
